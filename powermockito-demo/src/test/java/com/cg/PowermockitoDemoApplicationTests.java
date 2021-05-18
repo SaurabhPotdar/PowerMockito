@@ -29,13 +29,15 @@ public class PowermockitoDemoApplicationTests {
 	@Spy
 	private EmployeeService spy;
 	
-	private static final String METHOD = "iAmPrivate";
+	private static final String PRIVATE_METHOD = "privateMethod";
+	
+	private static final String FINAL_METHOD = "finalMethod";
 
 	@Test
 	@DisplayName("Mocking static method")
 	public void testMethodCallingStatic() throws Exception {
 		PowerMockito.mockStatic(EmployeeService.class);
-		PowerMockito.when(EmployeeService.get()).thenReturn("Hello");  //Mocking return from private method
+		PowerMockito.when(EmployeeService.staticMethod()).thenReturn("Hello");  //Mocking return from private method
 		assertEquals("Hello", spy.callStatic());
 	}
 	
@@ -43,9 +45,17 @@ public class PowermockitoDemoApplicationTests {
 	@DisplayName("Mocking private method")
 	public void testMethodCallingPrivate() throws Exception {
 		//EmployeeService spy = PowerMockito.spy(new EmployeeService());
-	    PowerMockito.doReturn("Test").when(spy, METHOD);  //Mocking return from private method
-	    assertEquals(spy.getDetails(), "Mock private method example: Test");
-	    PowerMockito.verifyPrivate(spy, Mockito.times(1)).invoke(METHOD);
+	    PowerMockito.doReturn("Test").when(spy, PRIVATE_METHOD);  //Mocking return from private method
+	    assertEquals(spy.callPrivate(), "Mock private method example: Test");
+	    PowerMockito.verifyPrivate(spy, Mockito.times(1)).invoke(PRIVATE_METHOD);
+	}
+	
+	@Test
+	@DisplayName("Mocking final method")
+	public void testMethodCallingFinal() throws Exception {
+	    PowerMockito.doReturn("Test").when(spy, FINAL_METHOD);  //Mocking return from private method
+	    assertEquals(spy.callFinal(), "Mock final method example: Test");
+	    PowerMockito.verifyPrivate(spy, Mockito.times(1)).invoke(FINAL_METHOD);
 	}
 
 }
