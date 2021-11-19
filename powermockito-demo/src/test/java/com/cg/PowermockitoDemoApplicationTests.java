@@ -37,7 +37,7 @@ public class PowermockitoDemoApplicationTests {
 	@DisplayName("Mocking static method")
 	public void testMethodCallingStatic() throws Exception {
 		PowerMockito.mockStatic(EmployeeService.class);
-		PowerMockito.when(EmployeeService.staticMethod()).thenReturn("Hello");  //Mocking return from private method
+		PowerMockito.when(EmployeeService.staticMethod()).thenReturn("Hello");  //Mocking return from static method
 		assertEquals("Hello", spy.callStatic());
 	}
 	
@@ -53,7 +53,7 @@ public class PowermockitoDemoApplicationTests {
 	@Test
 	@DisplayName("Mocking final method")
 	public void testMethodCallingFinal() throws Exception {
-	    PowerMockito.doReturn("Test").when(spy, FINAL_METHOD);  //Mocking return from private method
+	    PowerMockito.doReturn("Test").when(spy, FINAL_METHOD);  //Mocking return from final method
 	    assertEquals(spy.callFinal(), "Mock final method example: Test");
 	    PowerMockito.verifyPrivate(spy, Mockito.times(1)).invoke(FINAL_METHOD);
 	}
